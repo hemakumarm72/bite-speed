@@ -6,6 +6,7 @@ import {
 import * as Service from "./identity.service";
 import sequelizeConnection from "../../../models/db.connect";
 import { Transaction } from "sequelize";
+import { invalidException } from "../../../utils/apiErrorHandler";
 
 export const addContract = async (
   req: Request,
@@ -14,6 +15,11 @@ export const addContract = async (
 ) => {
   try {
     const { email, phoneNumber } = req.body;
+    if (email === null && phoneNumber === null)
+      throw invalidException(
+        "Either email or phoneNumber must be filled in.",
+        "2020" // TODO: subStatus code
+      );
     const data: NewContractDocument = {
       email,
       phoneNumber,

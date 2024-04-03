@@ -4,6 +4,6 @@ import identityComponents from "./identity";
 
 const router = express.Router();
 
-router.use("/user", identityComponents);
+router.use("/identity", identityComponents);
 
 export default router;

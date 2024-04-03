@@ -35,7 +35,7 @@ export const getContractOptional = async (
   try {
     const member = await Contract.findOne({
       where: {
-        [Op.or]: [{ email }, { phoneNumber }],
+        [Op.or]: [email ? { email } : {}, phoneNumber ? { phoneNumber } : {}],
       },
     });
     return Promise.resolve(member);

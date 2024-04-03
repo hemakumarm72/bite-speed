@@ -1,21 +1,23 @@
-import sequelizeConnection from '../db.connect';
-import { NewContractDocument } from '../@types/index';
-import { DataTypes, Model, Optional } from 'sequelize';
+import sequelizeConnection from "../db.connect";
+import { NewContractDocument } from "../@types/index";
+import { DataTypes, Model, Optional } from "sequelize";
 // import bcrypt from 'bcrypt';
 
-export interface ContractInput extends Optional<NewContractDocument, 'id'> {}
+export interface ContractInput extends Optional<NewContractDocument, "id"> {}
 
-interface ContractSchema extends Model<NewContractDocument, ContractInput>, NewContractDocument {
+interface ContractSchema
+  extends Model<NewContractDocument, ContractInput>,
+    NewContractDocument {
   createdAt?: Date;
   updatedAt?: Date;
 }
 
 const Contract = sequelizeConnection.define<ContractSchema>(
-  'contract',
+  "contract",
   {
     id: {
       allowNull: false,
-      autoIncrement: false,
+      autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER,
       // defaultValue: DataTypes.UUIDV1,
@@ -42,9 +44,9 @@ const Contract = sequelizeConnection.define<ContractSchema>(
     linkPrecedence: {
       allowNull: false,
       type: DataTypes.STRING,
-      defaultValue: 'primary',
+      defaultValue: "primary",
       validate: {
-        isIn: [['primary', 'secondary']], // Validate that the value is one of the enum values
+        isIn: [["primary", "secondary"]], // Validate that the value is one of the enum values
       },
     },
 
@@ -69,7 +71,7 @@ const Contract = sequelizeConnection.define<ContractSchema>(
       // },
     },
     //   underscored: true,
-  },
+  }
 );
 
 export default Contract;

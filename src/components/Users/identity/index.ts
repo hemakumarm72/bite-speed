@@ -7,7 +7,7 @@ import { ADD_CONTRACT } from "./identity.validation";
 const router = express.Router();
 
 router.post(
-  "/identity",
+  "/",
   checkSchema(ADD_CONTRACT),
   checkValidation,
   controller.addContract

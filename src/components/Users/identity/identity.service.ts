@@ -19,8 +19,11 @@ export const createContract = async (contract: NewContractDocument) => {
       contract.email,
       contract.phoneNumber
     );
+    if (isContract) contract.linkPrecedence = "secondary";
+    contract.linkedId = isContract?.id;
 
-    !isContract ? await addContract(contract, session) : null;
+    console.log(isContract?.dataValues, contract);
+    await addContract(contract, session);
 
     await session.commit();
   } catch (err: any) {

@@ -2,7 +2,7 @@ import { Model, Optional } from 'sequelize';
 import sequelizeConnection from '../index';
 
 export type NewContractDocument = {
-  id?: string;
+  id?: number;
   phoneNumber?: string;
   email?: string
   linkedId?: number | null
@@ -12,9 +12,10 @@ export type NewContractDocument = {
 };
 
 export type UpdateContractDocument = {
+  id?: number
   phoneNumber?: string;
   email?: string
-  linkedId?: string | null
+  linkedId?: number | null
   linkPrecedence?: 'secondary' | 'primary';
   deletedAt?: Date | null;
 };

@@ -3,9 +3,9 @@ import { NewContractDocument } from '../@types/index';
 import { DataTypes, Model, Optional } from 'sequelize';
 // import bcrypt from 'bcrypt';
 
-export interface MemberInput extends Optional<NewContractDocument, 'id'> {}
+export interface ContractInput extends Optional<NewContractDocument, 'id'> {}
 
-interface ContractSchema extends Model<NewContractDocument, MemberInput>, NewContractDocument {
+interface ContractSchema extends Model<NewContractDocument, ContractInput>, NewContractDocument {
   createdAt?: Date;
   updatedAt?: Date;
 }

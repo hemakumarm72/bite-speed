@@ -1,45 +1,44 @@
-'use strict';
+"use strict";
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('member', {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable("contract", {
       id: {
         allowNull: false,
-        autoIncrement: false,
         primaryKey: true,
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV1,
-        unique: true,
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
       },
-      name: {
+      phoneNumber: {
         allowNull: true,
         type: Sequelize.STRING,
+        defaultValue: null,
       },
       email: {
         type: Sequelize.STRING,
-        unique: true,
         allowNull: true,
         validate: {
           isEmail: true,
         },
+        defaultValue: null,
       },
-      // meme: {
-      //   allowNull: true,
-      //   type: Sequelize.STRING,
-      // },
-      password: {
+      linkedId: {
         allowNull: true,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+        defaultValue: null,
       },
-      role: {
-        allowNull: true,
+      linkPrecedence: {
+        allowNull: false,
         type: Sequelize.STRING,
-        defaultValue: 'General',
+        defaultValue: "primary",
+        validate: {
+          isIn: [["primary", "secondary"]], // Validate that the value is one of the enum values
+        },
       },
-      refreshToken: {
+      deletedAt: {
         allowNull: true,
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
+        defaultValue: null,
       },
       createdAt: {
         allowNull: false,
@@ -49,29 +48,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      deletedAt: {
-        allowNull: true,
-        type: Sequelize.DATE,
-      },
     });
-    // await queryInterface.changeColumn('Person', 'foo', {
-    //   type: Sequelize.FLOAT,
-    //   defaultValue: 3.14,
-    //   allowNull: false,
-    // });
-    // await queryInterface.addColumn('member', 'meme', {
-    //   allowNull: true,
-    //   type: Sequelize.STRING,
-    // });
   },
 
-  async down(queryInterface, Sequelize) {
-    // await queryInterface.dropTable('member');
-    await queryInterface.removeColumn('member', 'meme');
-    // return Promise.all([
-    //   queryInterface.removeColumn('Users', 'linkedin'),
-    //   queryInterface.removeColumn('Users', 'twitter'),
-    //   queryInterface.removeColumn('Users', 'bio'),
-    // ]);
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable("contract");
   },
 };

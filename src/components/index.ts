@@ -1,6 +1,6 @@
-import express from 'express';
-import components from './components';
+import express from "express";
+import components from "./components";
 
 export const registerComponents = (app: express.Application) => {
-  app.use('/api', components);
+  app.use("/v1/api", components);
 };

@@ -1,3 +1,4 @@
+import { Transaction } from "sequelize";
 import { paginate } from "../../utils/pagination";
 import { NewContractDocument, UpdateContractDocument } from "../@types";
 import Contract from "./contract.entity";
@@ -49,9 +50,12 @@ export const getContractByID = async (id?: string) => {
   }
 };
 
-export const addContract = async (data: NewContractDocument) => {
+export const addContract = async (
+  data: NewContractDocument,
+  session?: Transaction | undefined | null
+) => {
   try {
-    const contract = await Contract.create(data);
+    const contract = await Contract.create(data, { transaction: session });
     return Promise.resolve(contract);
   } catch (err) {
     return Promise.reject(err);
@@ -60,13 +64,15 @@ export const addContract = async (data: NewContractDocument) => {
 
 export const updateContractFields = async (
   id: string,
-  data: UpdateContractDocument
+  data: UpdateContractDocument,
+  session?: Transaction | undefined | null
 ) => {
   try {
     const member = await Contract.update(data, {
       where: {
         id,
       },
+      transaction: session, // Pass transaction option
     });
     return Promise.resolve(member);
   } catch (err) {
@@ -74,12 +80,16 @@ export const updateContractFields = async (
   }
 };
 
-export const deleteContract = async (id: string) => {
+export const deleteContract = async (
+  id: string,
+  session?: Transaction | undefined | null
+) => {
   try {
     const member = await Contract.destroy({
       where: {
         id,
       },
+      transaction: session, // Pass transaction option
     });
     return Promise.resolve(member);
   } catch (err) {

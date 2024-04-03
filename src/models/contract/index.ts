@@ -1,4 +1,4 @@
-import { Transaction } from "sequelize";
+import { Op, Transaction } from "sequelize";
 import { paginate } from "../../utils/pagination";
 import { NewContractDocument, UpdateContractDocument } from "../@types";
 import Contract from "./contract.entity";
@@ -28,11 +28,14 @@ export const getContractWithFilter = async (limit: number, offset: number) => {
     return Promise.reject(err);
   }
 };
-export const getContractByEmail = async (email: string) => {
+export const getContractOptional = async (
+  email?: string,
+  phoneNumber?: string
+) => {
   try {
     const member = await Contract.findOne({
       where: {
-        email,
+        [Op.or]: [{ email }, { phoneNumber }],
       },
     });
     return Promise.resolve(member);

@@ -7,7 +7,7 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { Transaction } from "sequelize";
 import sequelizeConnection from "../../../models/db.connect";
-import { addContract } from "../../../models/contract";
+import { addContract, getContractOptional } from "../../../models/contract";
 import { NewContractDocument } from "../../../models/@types";
 
 export const createContract = async (contract: NewContractDocument) => {
@@ -15,7 +15,12 @@ export const createContract = async (contract: NewContractDocument) => {
   const session: Transaction = await sequelizeConnection.transaction(); //TODO: transaction if failed rollback
 
   try {
-    await addContract(contract, session);
+    const isContract = await getContractOptional(
+      contract.email,
+      contract.phoneNumber
+    );
+
+    !isContract ? await addContract(contract, session) : null;
 
     await session.commit();
   } catch (err: any) {

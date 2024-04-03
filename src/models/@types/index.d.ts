@@ -1,7 +1,7 @@
 import { Model, Optional } from 'sequelize';
 import sequelizeConnection from '../index';
 
-export type NewMemberDocument = {
+export type NewContractDocument = {
   id?: string;
   phoneNumber?: string;
   email?: string
@@ -11,7 +11,7 @@ export type NewMemberDocument = {
 
 };
 
-export type UpdateMemberDocument = {
+export type UpdateContractDocument = {
   phoneNumber?: string;
   email?: string
   linkedId?: string | null

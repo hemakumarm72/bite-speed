@@ -1,16 +1,16 @@
 import sequelizeConnection from '../db.connect';
-import { NewMemberDocument } from '../@types/index';
+import { NewContractDocument } from '../@types/index';
 import { DataTypes, Model, Optional } from 'sequelize';
 // import bcrypt from 'bcrypt';
 
-export interface MemberInput extends Optional<NewMemberDocument, 'id'> {}
+export interface MemberInput extends Optional<NewContractDocument, 'id'> {}
 
-interface Contract extends Model<NewMemberDocument, MemberInput>, NewMemberDocument {
+interface ContractSchema extends Model<NewContractDocument, MemberInput>, NewContractDocument {
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-const contract = sequelizeConnection.define<Contract>(
+const Contract = sequelizeConnection.define<ContractSchema>(
   'contract',
   {
     id: {
@@ -72,4 +72,4 @@ const contract = sequelizeConnection.define<Contract>(
   },
 );
 
-export default contract;
+export default Contract;

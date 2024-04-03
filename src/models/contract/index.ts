@@ -1,12 +1,10 @@
-import { Member } from '..';
-import { paginate } from '../../utils/pagination';
-import { NewMemberDocument, UpdateMemberDocument } from '../@types';
+import { paginate } from "../../utils/pagination";
+import { NewContractDocument, UpdateContractDocument } from "../@types";
+import Contract from "./contract.entity";
 
-export const getMember = async () => {
+export const getContract = async () => {
   try {
-    const member = await Member.findAll({
-      attributes: { exclude: ['password', 'refreshToken'] },
-    });
+    const member = await Contract.findAll();
 
     return Promise.resolve(member);
   } catch (err) {
@@ -14,18 +12,14 @@ export const getMember = async () => {
   }
 };
 
-export const getMemberwithfilter = async (limit: number, offset: number) => {
+export const getContractWithFilter = async (limit: number, offset: number) => {
   try {
     //TODO: SQL Pagination function is create own
     const pagination = await paginate(
-      Member, // Model name
-      {
-        attributes: {
-          exclude: ['password', 'refreshToken'],
-        }, // query, where .. etc
-      },
+      Contract, // Model name
+      {},
       offset,
-      limit,
+      limit
     );
 
     return Promise.resolve(pagination);
@@ -33,9 +27,9 @@ export const getMemberwithfilter = async (limit: number, offset: number) => {
     return Promise.reject(err);
   }
 };
-export const getMemeberByEmail = async (email: string) => {
+export const getContractByEmail = async (email: string) => {
   try {
-    const member = await Member.findOne({
+    const member = await Contract.findOne({
       where: {
         email,
       },
@@ -46,29 +40,32 @@ export const getMemeberByEmail = async (email: string) => {
   }
 };
 
-export const getMemberByID = async (memberId?: string) => {
+export const getContractByID = async (id?: string) => {
   try {
-    const member = await Member.findByPk(memberId);
-    return Promise.resolve(member);
+    const contract = await Contract.findByPk(id);
+    return Promise.resolve(contract);
   } catch (err) {
     return Promise.reject(err);
   }
 };
 
-export const addMember = async (data: NewMemberDocument) => {
+export const addContract = async (data: NewContractDocument) => {
   try {
-    const member = await Member.create(data);
-    return Promise.resolve(member);
+    const contract = await Contract.create(data);
+    return Promise.resolve(contract);
   } catch (err) {
     return Promise.reject(err);
   }
 };
 
-export const updateMemberFields = async (memberId: string, data: UpdateMemberDocument) => {
+export const updateContractFields = async (
+  id: string,
+  data: UpdateContractDocument
+) => {
   try {
-    const member = await Member.update(data, {
+    const member = await Contract.update(data, {
       where: {
-        id: memberId,
+        id,
       },
     });
     return Promise.resolve(member);
@@ -77,11 +74,11 @@ export const updateMemberFields = async (memberId: string, data: UpdateMemberDoc
   }
 };
 
-export const deleteMember = async (memberId?: string) => {
+export const deleteContract = async (id: string) => {
   try {
-    const member = await Member.destroy({
+    const member = await Contract.destroy({
       where: {
-        id: memberId,
+        id,
       },
     });
     return Promise.resolve(member);

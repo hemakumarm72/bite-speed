@@ -1,23 +1,32 @@
 exports = {
-  root: true,
   env: {
-    es6: true,
+    es2021: true,
     node: true,
   },
-  parser: "@typescript-eslint/parser",
-  parserOptions: {
-    sourceType: "module",
-    ecmaVersion: 2019, // Node.js 12の場合は2019、他のバージョンのNode.jsを利用している場合は場合は適宜変更する
-    tsconfigRootDir: __dirname,
-    project: ["./tsconfig.eslint.json"],
-  },
-  plugins: ["@typescript-eslint"],
   extends: [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "prettier",
-    "prettier/@typescript-eslint",
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+    'prettier/@typescript-eslint',
   ],
+  overrides: [
+    {
+      env: {
+        node: true,
+      },
+      files: ['.eslintrc.{js,cjs}'],
+      parserOptions: {
+        sourceType: 'script',
+      },
+    },
+  ],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    tsconfigRootDir: __dirname,
+    project: ['./tsconfig.eslint.json'],
+  },
+  plugins: ['@typescript-eslint'],
   rules: {},
 };

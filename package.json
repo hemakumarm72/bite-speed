@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "nodemon --exec ts-node ./src/bin/www.ts",
-    "server:build": "npm run build && cp -r ./config ./dist && && cp -r ./public ./dist",
+    "server:build": "npm run build && cp -r ./config ./dist && cp -r ./public ./dist",
     "server:run": "node ./dist/src/bin/www.js",
     "start": "node ./dist/src/bin/www.js",
     "build": "tsc",

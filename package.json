@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "nodemon --exec ts-node ./src/bin/www.ts",
-    "server:build": "npm run build && cp -r ./config ./dist",
+    "server:build": "npm run build && cp -r ./public ./dist",
     "start": "node ./dist/src/bin/www.js",
     "build": "tsc",
     "test": "jest --watchAll --detectOpenHandles",

@@ -2,8 +2,8 @@ import { Sequelize } from "sequelize";
 import fs from "fs";
 import path from "path";
 
-const env = process.env.NODE_ENV || "Development";
-const database = require("../../config/config.json")[env];
+const env = process.env.NODE_ENV || "development";
+const database = require("../../config/config.ts")[env];
 // import db from '../config/config';
 
 // const database =

@@ -13,4 +13,4 @@ package-lock.json
 /coverage
 
 
-config/config.json
+# config/config.json

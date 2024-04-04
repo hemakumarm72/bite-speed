@@ -1,19 +1,19 @@
 import sequelizeConnection from "../db.connect";
-import { NewContractDocument } from "../@types/index";
+import { NewContactDocument } from "../@types/index";
 import { DataTypes, Model, Optional } from "sequelize";
 // import bcrypt from 'bcrypt';
 
-export interface ContractInput extends Optional<NewContractDocument, "id"> {}
+export interface ContactInput extends Optional<NewContactDocument, "id"> {}
 
-interface ContractSchema
-  extends Model<NewContractDocument, ContractInput>,
-    NewContractDocument {
+interface ContactSchema
+  extends Model<NewContactDocument, ContactInput>,
+    NewContactDocument {
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-const Contract = sequelizeConnection.define<ContractSchema>(
-  "contract",
+const Contact = sequelizeConnection.define<ContactSchema>(
+  "contact",
   {
     id: {
       allowNull: false,
@@ -74,4 +74,4 @@ const Contract = sequelizeConnection.define<ContractSchema>(
   }
 );
 
-export default Contract;
+export default Contact;

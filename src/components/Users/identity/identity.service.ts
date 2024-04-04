@@ -7,23 +7,38 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { Transaction } from "sequelize";
 import sequelizeConnection from "../../../models/db.connect";
-import { addContract, getContractOptional } from "../../../models/contract";
-import { NewContractDocument } from "../../../models/@types";
+import {
+  addContract,
+  getContract,
+  getContractOptional,
+  updateContractFields,
+} from "../../../models/contract";
+import {
+  ContactDocument,
+  NewContactDocument,
+  UpdateContactDocument,
+} from "../../../models/@types";
+import { getContractExtract } from "../../../utils/getContract";
 
-export const createContract = async (contract: NewContractDocument) => {
+export const createContract = async (
+  newContact: NewContactDocument,
+  updateContact: ContactDocument,
+  isBoth: boolean
+) => {
   let error: Error | HttpException | undefined;
   const session: Transaction = await sequelizeConnection.transaction(); //TODO: transaction if failed rollback
-
   try {
-    const isContract = await getContractOptional(
-      contract.email,
-      contract.phoneNumber
-    );
-    if (isContract) contract.linkPrecedence = "secondary";
-    contract.linkedId = isContract?.id;
-
-    console.log(isContract?.dataValues, contract);
-    await addContract(contract, session);
+    console.log("new contract", newContact);
+    isBoth && updateContact.id
+      ? await updateContractFields(
+          updateContact.id,
+          {
+            linkPrecedence: "secondary",
+            linkedId: newContact.linkedId,
+          },
+          session
+        )
+      : await addContract(newContact, session);
 
     await session.commit();
   } catch (err: any) {
@@ -35,6 +50,13 @@ export const createContract = async (contract: NewContractDocument) => {
   } finally {
   }
   if (!error) {
-    return Promise.resolve();
+    const getContracts = await getContractOptional(
+      newContact.email,
+      newContact.phoneNumber
+    );
+
+    const result = getContractExtract(getContracts);
+
+    return Promise.resolve(result);
   }
 };

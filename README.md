@@ -37,7 +37,7 @@ In the request URL, provide the following query parameters with values.
 
 ##### Request
 
-```
+```json
 {
      "email": "mcfly@hillvalley.edu",
      "phoneNumber": "123456"
@@ -64,7 +64,7 @@ In the request URL, provide the following query parameters with values.
 
 ##### Request
 
-```
+```json
 {
      "email": "mcfly@hillvalley.edu",
      "phoneNumber": "123456"

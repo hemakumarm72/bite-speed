@@ -3,7 +3,7 @@ import { checkSchema } from "express-validator";
 
 import * as controller from "./identity.controller";
 import { checkValidation } from "../../../utils/validation";
-import { ADD_CONTRACT } from "./identity.validation";
+import { ADD_CONTRACT, GET_SCHEMA } from "./identity.validation";
 const router = express.Router();
 
 router.post(
@@ -13,4 +13,10 @@ router.post(
   controller.addContract
 );
 
+router.get(
+  "/",
+  checkSchema(GET_SCHEMA),
+  checkValidation,
+  controller.getContractByAll
+);
 export default router;

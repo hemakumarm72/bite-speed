@@ -6,6 +6,8 @@ import {
 } from "../../../models/@types";
 import * as Service from "./identity.service";
 import { invalidException } from "../../../utils/apiErrorHandler";
+import { handleResponse } from "../../../middleware/requestHandle";
+import { getContract } from "../../../models/contract";
 
 export const addContract = async (
   req: Request,
@@ -73,10 +75,21 @@ export const addContract = async (
 
     const result = await Service.createContract(create, contactPhone, isBoth); // TODO: create and update contract model
 
-    return res.status(200).json({
-      success: true,
-      contact: result,
-    });
+    return handleResponse(res, 200, { contact: result });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+
+export const getContractByAll = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const result = await getContract();
+    return handleResponse(res, 200, { contact: result });
   } catch (err) {
     console.error(err);
     next(err);
